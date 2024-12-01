@@ -5,6 +5,7 @@ const {
   StrategyOptions,
   VerifyCallback,
 } = require("passport-google-oauth20");
+const { findUserByEmail, createUser } = require("../model/UserModal");
 
 const config = {
   CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
@@ -19,17 +20,15 @@ const AUTH_OPTIONS = {
 };
 
 async function verifyCallback(accessToken, refreshToken, profile, done) {
-  // console.log("Google data", profile);
-  // let user = await User.findOne({ googleId: profile.id });
+  const { id: googleId, displayName: fullname } = profile;
+  const profileImg = profile.photos[0].value;
+  const email = profile.emails[0].value;
 
-  // if (!user) {
-  //   user = await User.create({
-  //     googleId: profile.id,
-  //     name: profile.displayName,
-  //     email: profile.emails ? profile.emails[0].value : "",
-  //     profilePicture: profile.photos ? profile.photos[0].value : "",
-  //   });
-  // }
+  const user = findUserByEmail(email);
+
+  if (!user) {
+    createUser(googleId, fullname, email, (role = "customer"), profileImg);
+  }
 
   done(null, profile);
 }
