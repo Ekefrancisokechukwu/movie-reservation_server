@@ -1,8 +1,8 @@
 const { queryDB } = require("../config/db");
 
 const createUser = async (googleId, fullname, email, role, profileImg) => {
-  const query = `INSERT INTO users (googleId,fullname, email, role, profileImg)
-  VALUES ($1 , $2 , $3, $4)
+  const query = `INSERT INTO users (google_id,fullname, email, role, profileImg)
+  VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
   `;
   const params = [googleId, fullname, email, role, profileImg];
@@ -19,4 +19,13 @@ const findUserByEmail = async (email) => {
   return res.rows[0];
 };
 
-module.exports = { createUser, findUserByEmail };
+const findUserWithId = async (id) => {
+  const query = `SELECT * FROM users 
+  WHERE google_id = $1
+  `;
+
+  const res = await queryDB(query, [id]);
+  return res.rows[0];
+};
+
+module.exports = { createUser, findUserByEmail, findUserWithId };

@@ -5,7 +5,11 @@ const {
   StrategyOptions,
   VerifyCallback,
 } = require("passport-google-oauth20");
-const { findUserByEmail, createUser } = require("../model/UserModal");
+const {
+  findUserByEmail,
+  createUser,
+  findUserWithId,
+} = require("../model/UserModal");
 
 const config = {
   CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
@@ -24,18 +28,35 @@ async function verifyCallback(accessToken, refreshToken, profile, done) {
   const profileImg = profile.photos[0].value;
   const email = profile.emails[0].value;
 
-  const user = findUserByEmail(email);
+  try {
+    let user = await findUserWithId(googleId);
 
-  if (!user) {
-    createUser(googleId, fullname, email, (role = "customer"), profileImg);
+    if (!user) {
+      user = await createUser(
+        googleId,
+        fullname,
+        email,
+        (role = "customer"),
+        profileImg
+      );
+    }
+
+    done(null, user);
+  } catch (err) {
+    return done(err, null);
   }
-
-  done(null, profile);
 }
 
 passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((user, done) => done(null, user));
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
+    done(null, result.rows[0]);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 module.exports = passport;

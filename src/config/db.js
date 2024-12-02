@@ -13,8 +13,8 @@ async function queryDB(query, params) {
   try {
     const res = await client.query(query, params);
     return res;
-  } catch (error) {
-    console.error("Database query error:", err.stack);
+  } catch (err) {
+    console.error("Database query error:", err);
     throw err;
   } finally {
     client.release();
