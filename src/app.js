@@ -10,6 +10,7 @@ const notFoundMiddleware = require("./middleware/notFoundMiddleware");
 
 // Routes
 const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
 
 // express
 const app = express();
@@ -35,6 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRouter);
 
 app.get("/", (req, res) => {
   res.send(`

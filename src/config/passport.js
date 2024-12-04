@@ -1,15 +1,6 @@
 const passport = require("passport");
-const {
-  Profile,
-  Strategy,
-  StrategyOptions,
-  VerifyCallback,
-} = require("passport-google-oauth20");
-const {
-  findUserByEmail,
-  createUser,
-  findUserWithId,
-} = require("../model/UserModal");
+const { Strategy } = require("passport-google-oauth20");
+const { createUser, findUserWithId } = require("../model/UserModal");
 
 const config = {
   CLIENT_ID: process.env.GOOGLE_CLIENT_ID,

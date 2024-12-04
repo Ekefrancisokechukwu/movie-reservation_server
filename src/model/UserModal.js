@@ -11,6 +11,13 @@ const createUser = async (googleId, fullname, email, role, profileImg) => {
   return res.rows[0];
 };
 
+const getUsers = async () => {
+  const query = `SELECT * FROM users RETURNING *`;
+  const res = await queryDB(query);
+
+  return res.rows[0];
+};
+
 const findUserByEmail = async (email) => {
   const query = `SELECT * FROM users 
   WHERE email = $1
@@ -28,4 +35,9 @@ const findUserWithId = async (id) => {
   return res.rows[0];
 };
 
-module.exports = { createUser, findUserByEmail, findUserWithId };
+module.exports = {
+  createUser,
+  findUserByEmail,
+  findUserWithId,
+  getUsers,
+};
