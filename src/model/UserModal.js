@@ -12,10 +12,10 @@ const createUser = async (googleId, fullname, email, role, profileImg) => {
 };
 
 const getUsers = async () => {
-  const query = `SELECT * FROM users RETURNING *`;
+  const query = `SELECT * FROM users`;
   const res = await queryDB(query);
 
-  return res.rows[0];
+  return res.rows;
 };
 
 const findUserByEmail = async (email) => {

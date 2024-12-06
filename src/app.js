@@ -7,6 +7,7 @@ const passport = require("./config/passport");
 
 // middleware
 const notFoundMiddleware = require("./middleware/notFoundMiddleware");
+const errorHandlerMiddleware = require("./middleware/errorMiddleware");
 
 // Routes
 const authRouter = require("./routes/authRoutes");
@@ -48,5 +49,6 @@ app.get("/", (req, res) => {
 });
 
 app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 module.exports = app;
