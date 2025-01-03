@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "start": "node dist/server.js",
+    "dev": "nodemon",
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [],
@@ -25,5 +27,15 @@
     "redis": "^4.7.0",
     "socket.io": "^4.8.1",
     "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.10.4",
+    "@types/passport-google-oauth20": "^2.0.16",
+    "@types/pg": "^8.11.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
