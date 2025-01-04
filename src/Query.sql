@@ -1,6 +1,9 @@
+
+
+-- USER TABLE
 CREATE TABLE users (
   Id SERIAL PRIMARY KEY,
-  google_id VARCHAR(255) UNIQUE,
+  googleId VARCHAR(255) UNIQUE,
   fullname VARCHAR(255) NOT NULL,
   email VARCHAR(150) UNIQUE NOT NULL,
   role  VARCHAR(20) NOT NULL DEFAULT 'customer' CHECK (role IN ('admin','customer')),
@@ -9,3 +12,14 @@ CREATE TABLE users (
   updatedAt TIMESTAMP DEFAULT NOW()
 );
 
+
+-- MOVIE TABLE
+
+CREATE TABLE movies (
+  Id SERIAL PRIMARY KEY,
+  title VARCHAR(255),
+  posterImg VARCHAR(255),
+  description VARCHAR(255),
+  genre VARCHAR(255)
+  showtime TIMESTAMP
+)

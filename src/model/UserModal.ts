@@ -15,7 +15,7 @@ const createUser = async ({
   role,
   profileImg,
 }: IUserProps) => {
-  const query = `INSERT INTO users (google_id,fullname, email, role, profileImg)
+  const query = `INSERT INTO users (googleId,fullname, email, role, profileImg)
   VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
   `;
@@ -43,7 +43,7 @@ const findUserByEmail = async (email: string) => {
 
 const findUserWithId = async (id: string) => {
   const query = `SELECT * FROM users 
-  WHERE google_id = $1
+  WHERE googleId = $1
   `;
 
   const res = await queryDB(query, [id]);

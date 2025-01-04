@@ -49,7 +49,7 @@ async function verifyCallback(
     // Transform the user to match IUser interface
     const userForPassport: IUser = {
       _id: user.id.toString(),
-      googleId: user.google_id,
+      googleId: user.googleId,
       name: user.fullname,
       email: user.email,
       profilePicture: user.profileImg,
@@ -69,7 +69,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const result = await queryDB(`SELECT * FROM users WHERE google_id = $1`, [
+    const result = await queryDB(`SELECT * FROM users WHERE googleId = $1`, [
       id,
     ]);
     const user = result.rows[0] as IUser;
