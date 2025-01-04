@@ -10,7 +10,7 @@ function googleCallback(req: Request, res: Response) {
     _id: JSON.stringify(user._id),
   });
 
-  console.log(token);
+  // console.log(token);
 
   res.redirect("/");
 }
