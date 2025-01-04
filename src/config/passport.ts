@@ -28,28 +28,27 @@ async function verifyCallback(
   profile: Profile,
   done: VerifyCallback
 ): Promise<void> {
-  const { id: googleId, displayName: name } = profile;
+  const { id: google_id, displayName: name } = profile;
   const profilePicture = profile.photos?.[0]?.value || "";
   const email = profile.emails?.[0]?.value || "";
 
   try {
-    let user = await findUserWithId(googleId);
+    let user = await findUserWithId(google_id);
     const role = "customer";
 
     if (!user) {
       user = await createUser({
-        googleId,
-        fullname: name,
+        google_id,
+        full_name: name,
         email,
         role,
-        profileImg: profilePicture,
+        profile_img: profilePicture,
       });
     }
 
-    // Transform the user to match IUser interface
     const userForPassport: IUser = {
       _id: user.id.toString(),
-      googleId: user.googleId,
+      google_id: user.googleId,
       name: user.fullname,
       email: user.email,
       profilePicture: user.profileImg,
@@ -64,12 +63,12 @@ async function verifyCallback(
 passport.use(new GoogleStrategy(AUTH_OPTIONS, verifyCallback));
 
 passport.serializeUser((user, done) => {
-  done(null, (user as IUser).googleId);
+  done(null, (user as IUser).google_id);
 });
 
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const result = await queryDB(`SELECT * FROM users WHERE googleId = $1`, [
+    const result = await queryDB(`SELECT * FROM users WHERE google_id = $1`, [
       id,
     ]);
     const user = result.rows[0] as IUser;

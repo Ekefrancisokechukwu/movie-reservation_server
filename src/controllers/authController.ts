@@ -6,7 +6,7 @@ function googleCallback(req: Request, res: Response) {
   const user = req.user as IUser;
 
   const token = generateToken({
-    googleId: user.googleId,
+    googleId: user.google_id,
     _id: JSON.stringify(user._id),
   });
 

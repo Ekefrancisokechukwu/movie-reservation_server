@@ -1,26 +1,26 @@
 import { queryDB } from "../config/db";
 
 interface IUserProps {
-  googleId: string;
-  fullname: string;
+  google_id: string;
+  full_name: string;
   email: string;
   role: "admin" | "customer";
-  profileImg: string;
+  profile_img: string;
 }
 
 const createUser = async ({
-  googleId,
-  fullname,
+  google_id,
+  full_name,
   email,
   role,
-  profileImg,
+  profile_img,
 }: IUserProps) => {
-  const query = `INSERT INTO users (googleId,fullname, email, role, profileImg)
+  const query = `INSERT INTO users (google_id,full_name, email, role, profile_img)
   VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
   `;
 
-  const params = [googleId, fullname, email, role, profileImg];
+  const params = [google_id, full_name, email, role, profile_img];
   const res = await queryDB(query, params);
 
   return res.rows[0];
@@ -43,7 +43,7 @@ const findUserByEmail = async (email: string) => {
 
 const findUserWithId = async (id: string) => {
   const query = `SELECT * FROM users 
-  WHERE googleId = $1
+  WHERE google_id = $1
   `;
 
   const res = await queryDB(query, [id]);
