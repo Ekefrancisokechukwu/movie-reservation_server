@@ -1,5 +1,4 @@
 
-
 -- USER TABLE
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -56,3 +55,9 @@ CREATE TABLE reservations (
   status VARCHAR(20) DEFAULT 'reserved' CHECK (status IN ('reserved','canceled')), -- 'reserved' or 'canceled'
   created_at TIMESTAMP DEFAULT NOW()
 );
+
+
+-- INDEXING
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_google_id ON users(google_id);
+CREATE INDEX idx_users_role ON users(role);

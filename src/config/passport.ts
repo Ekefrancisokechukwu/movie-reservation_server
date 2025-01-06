@@ -1,5 +1,4 @@
 import passport from "passport";
-import { Express } from "express";
 import {
   Strategy as GoogleStrategy,
   Profile,
