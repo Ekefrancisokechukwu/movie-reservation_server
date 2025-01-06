@@ -2,7 +2,7 @@
 
 -- USER TABLE
 CREATE TABLE users (
-  Id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   google_id VARCHAR(255) UNIQUE,
   full_name VARCHAR(255) NOT NULL,
   email VARCHAR(150) UNIQUE NOT NULL,
@@ -44,5 +44,15 @@ CREATE TABLE showtimes (
   movie_id INT REFERENCES movies(id) ON DELETE CASCADE,
   showtime TIMESTAMP NOT NULL,
   capacity INT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- RESERVATION
+CREATE TABLE reservations (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id) ON DELETE CASCADE, 
+  showtime_id INT REFERENCES showtimes(id) ON DELETE CASCADE,
+  seat_number VARCHAR(10) NOT NULL,
+  status VARCHAR(20) DEFAULT 'reserved' CHECK (status IN ('reserved','canceled')), -- 'reserved' or 'canceled'
   created_at TIMESTAMP DEFAULT NOW()
 );

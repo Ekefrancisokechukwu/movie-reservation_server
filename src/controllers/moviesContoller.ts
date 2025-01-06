@@ -1,1 +1,4 @@
-export const addmovie = async () => {};
+export const addMovie = async () => {
+  const query = [];
+  const param = [];
+};
