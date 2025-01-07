@@ -10,3 +10,5 @@ const router = Router();
 
 router.route("/").post(addMovie).get(getAllMovies);
 router.route("/:id").patch(updateMovie).delete(deleteMovie);
+
+export default router;

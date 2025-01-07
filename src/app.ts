@@ -12,6 +12,7 @@ import errorHandlerMiddleware from "./middleware/errorMiddleware";
 // Routes
 import authRouter from "./routes/authRoutes";
 import userRouter from "./routes/userRoutes";
+import moviesRouter from "./routes/moviesRoutes";
 
 // basic setup
 const app = express();
@@ -36,6 +37,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/api/v1/movies", moviesRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 
